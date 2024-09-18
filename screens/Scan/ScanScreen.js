@@ -12,9 +12,6 @@ import { ArrowLeft, Camera as CameraIcon, XCircle } from "lucide-react-native";
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
-  withRepeat,
-  withTiming,
-  Easing,
 } from "react-native-reanimated";
 
 const ScanScreen = ({ navigation }) => {
@@ -24,21 +21,18 @@ const ScanScreen = ({ navigation }) => {
 
   const rotation = useSharedValue(0);
 
+  const animatedStyle = useAnimatedStyle(() => ({
+    transform: [{ rotate: `${rotation.value}deg` }],
+  }));
+
   useEffect(() => {
     (async () => {
-      const { status } = await Camera.requestCameraPermissionsAsync();
+      const { status } = await Camera.getCameraPermissionsAsync();
       setHasPermission(status === "granted");
     })();
   }, []);
 
-  const animatedStyle = useAnimatedStyle(() => {
-    return {
-      transform: [{ rotate: `${rotation.value}deg` }],
-    };
-  });
-
   const onCameraReady = () => {
-    console.log("Camera is ready");
     setCameraReady(true);
   };
 
@@ -49,15 +43,24 @@ const ScanScreen = ({ navigation }) => {
     }
   };
 
-  const handleRequestPermission = () => {
-    Linking.openSettings();
+  const handleRequestPermission = async () => {
+    const { status } = await Camera.requestCameraPermissionsAsync();
+    setHasPermission(status === "granted");
+
+    if (status !== "granted") {
+      Linking.openSettings();
+    }
   };
 
-  if (hasPermission === null || hasPermission === false) {
+  if (hasPermission === null) {
+    return null; // Still loading
+  }
+
+  if (hasPermission === false) {
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.header}>
-          <TouchableOpacity onPress={() => navigation.goBack()}>
+          <TouchableOpacity onPress={() => navigation.navigate("Home")}>
             <ArrowLeft color="#fff" size={24} />
           </TouchableOpacity>
           <Text style={styles.headerTitle}>Camera Access</Text>

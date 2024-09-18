@@ -120,6 +120,10 @@ const Grievances = () => {
       visibilityTime: 5000, // Set visibility time to 5 seconds
       position: "top",
       autoHide: true,
+      onHide: () => {
+        // Navigate to ProfileScreen after toast ends
+        navigation.navigate("Profile");
+      },
       onPress: () => Toast.hide(), // Hide on press (optional)
       renderCustomContent: ({ hide }) => (
         <CustomToastContent

@@ -9,6 +9,7 @@ import {
   Dimensions,
 } from "react-native";
 import { StatusBar } from "expo-status-bar";
+import { LinearGradient } from "expo-linear-gradient"; // Import LinearGradient from expo-linear-gradient
 import {
   useFonts,
   Inter_400Regular,
@@ -102,41 +103,48 @@ const Onboarding = ({ navigation }) => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.StatusBar}>
-        <StatusBar style="light" />
-      </View>
-      <View style={styles.content}>
-        <View style={styles.appNameContainer}>
-          <Image source={require("../assets/splash.png")} style={styles.logo} />
-          <Text style={styles.appName}>Travent</Text>
+    <LinearGradient colors={["#1E262F", "#16171B"]} style={styles.container}>
+      <SafeAreaView style={styles.safeArea}>
+        <View style={styles.StatusBar}>
+          <StatusBar style="light" />
         </View>
+        <View style={styles.content}>
+          <View style={styles.appNameContainer}>
+            <Image
+              source={require("../assets/splash.png")}
+              style={styles.logo}
+            />
+            <Text style={styles.appName}>Travent</Text>
+          </View>
 
-        <View style={styles.main}>{renderContent()}</View>
+          <View style={styles.main}>{renderContent()}</View>
 
-        <View style={styles.footer}>
-          <View style={styles.buttonContainer}>
-            <TouchableOpacity style={styles.button} onPress={handleNext}>
-              <Text style={styles.buttonText}>
-                {currentPage === 2 ? "Get Started" : "Next"}
-              </Text>
-            </TouchableOpacity>
+          <View style={styles.footer}>
+            <View style={styles.buttonContainer}>
+              <TouchableOpacity style={styles.button} onPress={handleNext}>
+                <Text style={styles.buttonText}>
+                  {currentPage === 2 ? "Get Started" : "Next"}
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+          <View style={styles.paginationDots}>
+            <View style={[styles.dot, currentPage === 0 && styles.activeDot]} />
+            <View style={[styles.dot, currentPage === 1 && styles.activeDot]} />
+            <View style={[styles.dot, currentPage === 2 && styles.activeDot]} />
           </View>
         </View>
-        <View style={styles.paginationDots}>
-          <View style={[styles.dot, currentPage === 0 && styles.activeDot]} />
-          <View style={[styles.dot, currentPage === 1 && styles.activeDot]} />
-          <View style={[styles.dot, currentPage === 2 && styles.activeDot]} />
-        </View>
-      </View>
-    </SafeAreaView>
+      </SafeAreaView>
+    </LinearGradient>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#1E293B",
+  },
+  safeArea: {
+    flex: 1,
   },
   content: {
     flex: 1,

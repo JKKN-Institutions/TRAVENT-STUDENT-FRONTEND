@@ -60,7 +60,7 @@ const LoginScreen = ({ navigation }) => {
   };
 
   return (
-    <LinearGradient colors={["#353A40", "#16171B"]} style={styles.container}>
+    <LinearGradient colors={["#1E262F", "#16171B"]} style={styles.container}>
       <SafeAreaView style={styles.content}>
         <Image source={require("../assets/splash.png")} style={styles.logo} />
         <Text style={styles.title}>Dive Into an Adventure.</Text>
@@ -79,7 +79,10 @@ const LoginScreen = ({ navigation }) => {
             icon={showPassword ? "eye" : "eye-off"}
             onIconPress={togglePasswordVisibility}
           />
-          <TouchableOpacity style={styles.forgotPasswordContainer}>
+          <TouchableOpacity
+            style={styles.forgotPasswordContainer}
+            onPress={() => navigation.navigate("CreateNewPassword")}
+          >
             <Text style={styles.forgotPassword}>Forgot Password?</Text>
           </TouchableOpacity>
         </View>

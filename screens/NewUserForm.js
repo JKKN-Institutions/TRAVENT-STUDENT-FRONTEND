@@ -172,7 +172,7 @@ const NewUserForm = () => {
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <LinearGradient colors={["#353A40", "#16171B"]} style={styles.container}>
+      <LinearGradient colors={["#1E262F", "#16171B"]} style={styles.container}>
         <SafeAreaView style={styles.content}>
           <ScrollView
             contentContainerStyle={styles.scrollContent}

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   StyleSheet,
@@ -13,10 +13,36 @@ import StatusBar from "./StatusBar";
 import ScheduleSection from "./ScheduleSection";
 import TrackButton from "./TrackButton";
 import Navbar from "./Navbar";
+import ScheduleFormOverlay from "./ScheduleFormOverlay";
+import ConfirmationScreen from "./ScheduleConfirmationScreen";
 
 const { height, width } = Dimensions.get("window");
 
 const HomeScreen = () => {
+  const [isOverlayVisible, setIsOverlayVisible] = useState(false);
+  const [selectedDate, setSelectedDate] = useState("");
+  const [showConfirmation, setShowConfirmation] = useState(false);
+  const [confirmedDate, setConfirmedDate] = useState("");
+
+  const handleDateSelect = (date) => {
+    setSelectedDate(date);
+    setIsOverlayVisible(true);
+  };
+
+  const handleScheduleConfirm = (date) => {
+    setConfirmedDate(date);
+    setIsOverlayVisible(false);
+    setShowConfirmation(true);
+  };
+
+  const handleGoHome = () => {
+    setShowConfirmation(false);
+  };
+
+  if (showConfirmation) {
+    return <ConfirmationScreen date={confirmedDate} onGoHome={handleGoHome} />;
+  }
+
   return (
     <LinearGradient colors={["#1E262F", "#16171B"]} style={styles.container}>
       <SafeAreaView style={styles.safeArea}>
@@ -32,11 +58,17 @@ const HomeScreen = () => {
               <InfoCard title="26/07 2024" subtitle="Date" />
             </View>
             <StatusBar />
-            <ScheduleSection />
+            <ScheduleSection onDateSelect={handleDateSelect} />
             <TrackButton />
           </View>
         </ScrollView>
         <Navbar />
+        <ScheduleFormOverlay
+          isVisible={isOverlayVisible}
+          onClose={() => setIsOverlayVisible(false)}
+          selectedDate={selectedDate}
+          onScheduleConfirm={handleScheduleConfirm}
+        />
       </SafeAreaView>
     </LinearGradient>
   );

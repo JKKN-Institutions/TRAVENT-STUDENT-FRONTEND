@@ -1,8 +1,15 @@
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
+import { useNavigation } from "@react-navigation/native";
 
 const TrackButton = () => {
+  const navigation = useNavigation();
+
+  const handleTrackPress = () => {
+    navigation.navigate("LiveTracking");
+  };
+
   return (
     <LinearGradient colors={["#1E262F", "#000000"]} style={styles.trackButton}>
       <View style={styles.contentContainer}>
@@ -20,7 +27,10 @@ const TrackButton = () => {
           />
         </View>
       </View>
-      <TouchableOpacity style={styles.trackButtonContainer}>
+      <TouchableOpacity
+        style={styles.trackButtonContainer}
+        onPress={handleTrackPress}
+      >
         <Text style={styles.trackText}>Track</Text>
       </TouchableOpacity>
     </LinearGradient>
@@ -38,17 +48,14 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "flex-start",
   },
-
   textContainer: {
     flex: 1,
   },
-
   trackButtonTitle: {
     color: "#B8BDC7",
     fontSize: 14,
     fontWeight: "600",
   },
-
   underline: {
     height: 3,
     width: 60,

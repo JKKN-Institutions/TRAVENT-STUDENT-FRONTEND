@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -20,6 +20,7 @@ import {
 } from "lucide-react-native";
 
 import Navbar from "../Home/Navbar";
+import Logout from "../Profile/Logout";
 import { useNavigation } from "@react-navigation/native";
 
 const { width } = Dimensions.get("window");
@@ -34,13 +35,27 @@ const ProfileOption = ({ icon: Icon, title, onPress }) => (
 
 const ProfileScreen = () => {
   const navigation = useNavigation();
+  const [showLogoutOverlay, setShowLogoutOverlay] = useState(false);
+
+  const handleLogout = () => {
+    setShowLogoutOverlay(true);
+  };
+
+  const handleLogoutConfirm = () => {
+    setShowLogoutOverlay(false);
+    navigation.navigate("Login");
+  };
+
+  const handleLogoutCancel = () => {
+    setShowLogoutOverlay(false);
+  };
 
   return (
     <LinearGradient colors={["#1E262F", "#16171B"]} style={styles.container}>
       <SafeAreaView style={styles.safeArea}>
         <ScrollView style={styles.scrollView}>
           <View style={styles.header}>
-            <TouchableOpacity onPress={() => navigation.goBack()}>
+            <TouchableOpacity onPress={() => navigation.navigate("Home")}>
               <ArrowLeft color="#fff" size={24} />
             </TouchableOpacity>
             <Text style={styles.headerTitle}>Profile</Text>
@@ -78,14 +93,15 @@ const ProfileScreen = () => {
             <ProfileOption
               icon={LogOut}
               title="Logout"
-              onPress={() => {
-                /* Handle logout */
-              }}
+              onPress={handleLogout}
             />
           </View>
         </ScrollView>
         <Navbar />
       </SafeAreaView>
+      {showLogoutOverlay && (
+        <Logout onConfirm={handleLogoutConfirm} onCancel={handleLogoutCancel} />
+      )}
     </LinearGradient>
   );
 };

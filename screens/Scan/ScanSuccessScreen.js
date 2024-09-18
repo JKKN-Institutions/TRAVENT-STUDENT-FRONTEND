@@ -1,7 +1,7 @@
-import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { CheckCircle } from 'lucide-react-native';
+import React from "react";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { CheckCircle } from "lucide-react-native";
 
 const ScanSuccessScreen = () => {
   const navigation = useNavigation();
@@ -12,15 +12,17 @@ const ScanSuccessScreen = () => {
       <Text style={styles.title}>Your arrival confirmed successfully!</Text>
       <TouchableOpacity
         style={styles.button}
-        onPress={() => navigation.navigate('ETicket')}
+        onPress={() => navigation.navigate("ETicket")}
       >
         <Text style={styles.buttonText}>View E-Ticket</Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={[styles.button, styles.secondaryButton]}
-        onPress={() => navigation.navigate('TrackBus')}
+        onPress={() => navigation.navigate("LiveTracking")}
       >
-        <Text style={[styles.buttonText, styles.secondaryButtonText]}>Track your bus</Text>
+        <Text style={[styles.buttonText, styles.secondaryButtonText]}>
+          Track your bus
+        </Text>
       </TouchableOpacity>
     </View>
   );
@@ -29,40 +31,40 @@ const ScanSuccessScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#1E1E1E',
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: "#1E1E1E",
+    justifyContent: "center",
+    alignItems: "center",
     padding: 20,
   },
   title: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 24,
-    fontWeight: 'bold',
-    textAlign: 'center',
+    fontWeight: "bold",
+    textAlign: "center",
     marginTop: 30,
     marginBottom: 50,
   },
   button: {
-    backgroundColor: '#00A3FF',
+    backgroundColor: "#00A3FF",
     paddingVertical: 15,
     paddingHorizontal: 30,
     borderRadius: 25,
     marginBottom: 20,
-    width: '80%',
+    width: "80%",
   },
   buttonText: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 18,
-    fontWeight: 'bold',
-    textAlign: 'center',
+    fontWeight: "bold",
+    textAlign: "center",
   },
   secondaryButton: {
-    backgroundColor: 'transparent',
+    backgroundColor: "transparent",
     borderWidth: 2,
-    borderColor: '#00A3FF',
+    borderColor: "#00A3FF",
   },
   secondaryButtonText: {
-    color: '#00A3FF',
+    color: "#00A3FF",
   },
 });
 

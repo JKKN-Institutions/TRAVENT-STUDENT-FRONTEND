@@ -12,7 +12,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react-native";
 
 const { width } = Dimensions.get("window");
 
-const ScheduleSection = () => {
+const ScheduleSection = ({ onDateSelect }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [selectedDate, setSelectedDate] = useState("");
 
@@ -40,6 +40,11 @@ const ScheduleSection = () => {
       isToday: date.toDateString() === currentDate.toDateString(),
     };
   });
+
+  const handleDayPress = (day) => {
+    setSelectedDate(day.dateString);
+    onDateSelect(day.dateString);
+  };
 
   return (
     <LinearGradient
@@ -74,7 +79,7 @@ const ScheduleSection = () => {
             textMonthFontSize: 18,
             textDayHeaderFontSize: 14,
           }}
-          onDayPress={(day) => setSelectedDate(day.dateString)}
+          onDayPress={handleDayPress}
           markedDates={{
             [selectedDate]: { selected: true, selectedColor: "#3498db" },
             "2024-07-25": { marked: true, dotColor: "#3498db" },
@@ -86,7 +91,17 @@ const ScheduleSection = () => {
         <View style={styles.miniCalendar}>
           <View style={styles.weekContainer}>
             {weekDates.map((item, index) => (
-              <View key={index} style={styles.dayColumn}>
+              <TouchableOpacity
+                key={index}
+                style={styles.dayColumn}
+                onPress={() =>
+                  handleDayPress({
+                    dateString: `2024-07-${item.date
+                      .toString()
+                      .padStart(2, "0")}`,
+                  })
+                }
+              >
                 {item.isToday ? (
                   <View style={styles.todayContainer}>
                     <Text style={styles.todayText}>{item.day}</Text>
@@ -98,7 +113,7 @@ const ScheduleSection = () => {
                     <Text style={styles.dateText}>{item.date}</Text>
                   </>
                 )}
-              </View>
+              </TouchableOpacity>
             ))}
           </View>
           <Text style={styles.monthYearText}>{monthYear}</Text>
